@@ -13,7 +13,14 @@ jobs:
 
       - name: Add scale-down patch if missing
         run: |
-          PATCH_BLOCK=$(cat <<EOF
+          for FILE in \
+            k8s_kustomize/overlays/development/kustomization.yaml \
+            k8s_kustomize/overlays/staging/kustomization.yaml; do
+
+            if ! grep -q 'value: 0' "$FILE"; then
+              echo "Adding scale-down patch to $FILE"
+              cat <<EOF >> "$FILE"
+
 patches:
   - target:
       kind: Deployment
@@ -22,14 +29,6 @@ patches:
         path: /spec/replicas
         value: 0
 EOF
-)
-          for FILE in \
-            k8s_kustomize/overlays/development/kustomization.yaml \
-            k8s_kustomize/overlays/staging/kustomization.yaml; do
-
-            if ! grep -q 'value: 0' "$FILE"; then
-              echo "Adding scale-down patch to $FILE"
-              echo "$PATCH_BLOCK" >> "$FILE"
             else
               echo "Scale-down patch already exists in $FILE"
             fi
