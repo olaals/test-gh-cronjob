@@ -1,0 +1,45 @@
+name: Scale Down
+on: workflow_dispatch
+
+permissions:
+  contents: write
+
+jobs:
+  scale-down:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Add scale-down patch if missing
+        run: |
+          PATCH_BLOCK=$(cat <<EOF
+patches:
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 0
+EOF
+)
+          for FILE in \
+            k8s_kustomize/overlays/development/kustomization.yaml \
+            k8s_kustomize/overlays/staging/kustomization.yaml; do
+
+            if ! grep -q 'value: 0' "$FILE"; then
+              echo "Adding scale-down patch to $FILE"
+              echo "$PATCH_BLOCK" >> "$FILE"
+            else
+              echo "Scale-down patch already exists in $FILE"
+            fi
+          done
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add k8s_kustomize/overlays/development/kustomization.yaml
+          git add k8s_kustomize/overlays/staging/kustomization.yaml
+          git commit -m "Scale down deployment replicas for development and staging"
+          git push
