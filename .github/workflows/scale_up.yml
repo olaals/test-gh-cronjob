@@ -11,20 +11,39 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      - name: Remove scale-down patch if present
-        run: |
-          for FILE in \
-            k8s_kustomize/overlays/development/kustomization.yaml \
-            k8s_kustomize/overlays/staging/kustomization.yaml; do
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
 
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+
+      - name: Remove scale-down patch
+        run: |
+          for FILE in k8s_kustomize/overlays/development/kustomization.yaml k8s_kustomize/overlays/staging/kustomization.yaml; do
             if grep -q 'value: 0' "$FILE"; then
               echo "Removing scale-down patch from $FILE"
-              # Remove the entire 'patches' section starting from 'patches:' to the end
-              sed -i '/patches:/,$d' "$FILE"
-            else
-              echo "No scale-down patch found in $FILE"
+              sed -i '/patches:/,/value: 0/d' "$FILE"
             fi
           done
+
+      - name: Generate Up badges
+        run: |
+          python3 ./.status/generate_badge.py \
+            --left-text "Aurora Dev Status" \
+            --right-text "Up" \
+            --left-color "#4D4D4D" \
+            --right-color "#44CC11" \
+            --output-path "./.status/scale_status_dev.svg"
+
+          python3 ./.status/generate_badge.py \
+            --left-text "Aurora Staging Status" \
+            --right-text "Up" \
+            --left-color "#4D4D4D" \
+            --right-color "#44CC11" \
+            --output-path "./.status/scale_status_staging.svg"
 
       - name: Commit and push changes
         run: |
@@ -32,5 +51,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add k8s_kustomize/overlays/development/kustomization.yaml
           git add k8s_kustomize/overlays/staging/kustomization.yaml
-          git commit -m "Scale up deployment replicas for development and staging"
+          git add ./.status/scale_status_dev.svg
+          git add ./.status/scale_status_staging.svg
+          git commit -m "Scale up deployments and update badges for development and staging"
           git push
