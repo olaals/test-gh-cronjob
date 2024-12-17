@@ -6,5 +6,13 @@
 sdfsdf
 sddsfdfsfds
 
+TODO
 
-[![Link](https://img.shields.io/badge/test-link-green)](https://github.com/olaals/test-gh-cronjob/actions/workflows/scale_up.yml)
+Add a link to scale up when the status is down
+
+[![Link](https://img.shields.io/badge/Click_to_scale_up-yellow)](https://github.com/olaals/test-gh-cronjob/actions/workflows/scale_up.yml)
+
+Add a link to scale down when the status is up
+
+
+[![Link](https://img.shields.io/badge/Click_to_scale_down-yellow)](https://github.com/olaals/test-gh-cronjob/actions/workflows/scale_down.yml)
