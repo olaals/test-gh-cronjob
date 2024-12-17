@@ -29,6 +29,12 @@ jobs:
             fi
           done
 
+      - name: Update README badges
+        run: |
+          sed -i 's|![Dev Status](.status/scale_status_dev_down.svg)|![Dev Status](.status/scale_status_dev_up.svg)|g' README.md
+          sed -i 's|![Staging Status](.status/scale_status_staging_down.svg)|![Staging Status](.status/scale_status_staging_up.svg)|g' README.md
+
+
       - name: Generate Up badges
         run: |
           python3 ./.status/generate_badge.py \
@@ -36,14 +42,14 @@ jobs:
             --right-text "Up" \
             --left-color "#4D4D4D" \
             --right-color "#44CC11" \
-            --output-path "./.status/scale_status_dev.svg"
+            --output-path "./.status/scale_status_dev_up.svg"
 
           python3 ./.status/generate_badge.py \
             --left-text "Aurora Staging Status" \
             --right-text "Up" \
             --left-color "#4D4D4D" \
             --right-color "#44CC11" \
-            --output-path "./.status/scale_status_staging.svg"
+            --output-path "./.status/scale_status_staging_up.svg"
 
       - name: Commit and push changes
         run: |
