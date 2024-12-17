@@ -1,0 +1,9 @@
+name: Scale Down Schedule
+on:
+  schedule:
+    - cron: "*/7 * * * *"
+
+jobs:
+  scale-down-job:
+    uses: ./.github/workflows/scale_down.yml
+

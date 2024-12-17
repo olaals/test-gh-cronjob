@@ -1,0 +1,9 @@
+name: Scale Up Schedule
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+  scale-up-job:
+    uses: ./.github/workflows/scale_up.yml
+

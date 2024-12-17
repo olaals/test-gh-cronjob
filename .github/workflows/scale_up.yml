@@ -1,5 +1,12 @@
 name: Scale Up
-on: workflow_dispatch
+on:
+  workflow_call:
+    inputs:
+      AuthorName:
+        required: false
+        type: string
+    secrets: {}
+
 
 permissions:
   contents: write
