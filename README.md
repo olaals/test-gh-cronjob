@@ -1,6 +1,6 @@
 # test-gh-cronjob
 
-![Dev Status](https://img.shields.io/badge/Aurora_Dev_Status-Down-red) ![Staging Status](https://img.shields.io/badge/Aurora_Staging_Status-Down-red) [![Link](https://img.shields.io/badge/Click_to_scale_up-yellow)](https://github.com/olaals/test-gh-cronjob/actions/workflows/scale_up.yml)
+![Dev Status](https://img.shields.io/badge/Aurora_Dev_Status-Down-red) ![Staging Status](https://img.shields.io/badge/Aurora_Staging_Status-Down-red) [![Link](https://img.shields.io/badge/Click_to_scale_up-blue)](https://github.com/olaals/test-gh-cronjob/actions/workflows/scale_up.yml)
 
 
 sdfsdf
