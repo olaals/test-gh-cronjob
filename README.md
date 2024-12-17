@@ -1,6 +1,6 @@
 # test-gh-cronjob
 
-![Dev Status](.status/scale_status_dev_down.svg) ![Staging Status](.status/scale_status_staging_down.svg)
+![Dev Status](https://img.shields.io/badge/Aurora_Dev_Status-Down-red) ![Staging Status](https://img.shields.io/badge/Aurora_Staging_Status-Down-red)
 
 
 sdfsdf
