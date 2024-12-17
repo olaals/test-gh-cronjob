@@ -3,6 +3,9 @@ on:
   schedule:
     - cron: "*/23 * * * *"
 
+permissions:
+  contents: write
+
 jobs:
   scale-up-job:
     uses: ./.github/workflows/scale_up.yml
