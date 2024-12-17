@@ -6,6 +6,7 @@ on:
         required: false
         type: string
     secrets: {}
+  workflow_dispatch:
 
 permissions:
   contents: write
