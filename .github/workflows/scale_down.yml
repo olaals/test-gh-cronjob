@@ -31,8 +31,8 @@ jobs:
 
       - name: Update README badges
         run: |
-          sed -i 's|![Dev Status](.status/scale_status_dev_up.svg)|![Dev Status](.status/scale_status_dev_down.svg)|g' README.md
-          sed -i 's|![Staging Status](.status/scale_status_staging_up.svg)|![Staging Status](.status/scale_status_staging_down.svg)|g' README.md
+          awk '{gsub(/!\[Dev Status]\(\.status\/scale_status_dev_up\.svg\)/, "![Dev Status](.status/scale_status_dev_down.svg)"); print}' README.md > tmp && mv tmp README.md
+          awk '{gsub(/!\[Staging Status]\(\.status\/scale_status_staging_up\.svg\)/, "![Staging Status](.status/scale_status_staging_down.svg)"); print}' README.md > tmp && mv tmp README.md
 
       - name: Generate Down badges
         run: |
