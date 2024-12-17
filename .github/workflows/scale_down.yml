@@ -54,6 +54,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
           git add k8s_kustomize/overlays/development/kustomization.yaml
           git add k8s_kustomize/overlays/staging/kustomization.yaml
           git add ./.status/scale_status_dev_down.svg
