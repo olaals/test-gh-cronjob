@@ -12,23 +12,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Add scale-down patch if missing
+        shell: bash
         run: |
-          for FILE in \
-            k8s_kustomize/overlays/development/kustomization.yaml \
-            k8s_kustomize/overlays/staging/kustomization.yaml; do
-
+          for FILE in k8s_kustomize/overlays/development/kustomization.yaml k8s_kustomize/overlays/staging/kustomization.yaml; do
             if ! grep -q 'value: 0' "$FILE"; then
               echo "Adding scale-down patch to $FILE"
-              cat <<EOF >> "$FILE"
-
-patches:
-  - target:
-      kind: Deployment
-    patch: |-
-      - op: replace
-        path: /spec/replicas
-        value: 0
-EOF
+              echo -e "\npatches:\n  - target:\n      kind: Deployment\n    patch: |-\n      - op: replace\n        path: /spec/replicas\n        value: 0" >> "$FILE"
             else
               echo "Scale-down patch already exists in $FILE"
             fi
@@ -40,5 +29,5 @@ EOF
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add k8s_kustomize/overlays/development/kustomization.yaml
           git add k8s_kustomize/overlays/staging/kustomization.yaml
-          git commit -m "Scale down deployment replicas for development and staging"
+          git commit -m "Scale down deployment replicas for development and staging" || echo "No changes to commit"
           git push
