@@ -39,7 +39,5 @@ jobs:
           git add README.md
           git add k8s_kustomize/overlays/development/kustomization.yaml
           git add k8s_kustomize/overlays/staging/kustomization.yaml
-          git add ./.status/scale_status_dev_down.svg
-          git add ./.status/scale_status_staging_down.svg
-          git commit -m "Scale down deployments and update badges for development and staging" || echo "No changes to commit"
+          git commit -m "Scale down deployments for development and staging"
           git push
