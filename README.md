@@ -4,6 +4,6 @@
 
 This is a test repository for GitHub Actions cron job.
 
-![Cluster Status](.cluster-status/output.svg?cache=123123)
+![Cluster Status](.cluster-status/output.svg?cache=12312324233)
 
 Some more text
