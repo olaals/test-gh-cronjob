@@ -47,3 +47,11 @@ kind: Kustomization
 
 
 
+
+patches:
+  - target:
+      kind: Deployment
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 0
