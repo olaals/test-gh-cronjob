@@ -25,6 +25,8 @@ jobs:
               echo "Removing scale-down patch from $FILE"
               sed -i '/patches:/,/value: 0/d' "$FILE"
             fi
+            # Remove trailing empty lines
+            awk 'NF || !seen++' $FILE > tmp && mv tmp $FILE
           done
 
       - name: Update README badges
